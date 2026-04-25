@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mohan Nakka — Software Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #080c10;
+    --surface: #0e1420;
+    --surface2: #131d2e;
+    --border: rgba(0,220,255,0.12);
+    --border2: rgba(0,220,255,0.25);
+    --cyan: #00dcff;
+    --cyan-dim: rgba(0,220,255,0.6);
+    --green: #00ff88;
+    --text: #c8d8e8;
+    --text-dim: #5a7090;
+    --text-muted: #364558;
+    --accent-glow: 0 0 20px rgba(0,220,255,0.3), 0 0 60px rgba(0,220,255,0.1);
+    --green-glow: 0 0 15px rgba(0,255,136,0.3);
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f5f7fa;
+      --surface: #ffffff;
+      --surface2: #f0f3f7;
+      --border: rgba(0,150,200,0.15);
+      --border2: rgba(0,150,200,0.3);
+      --cyan: #0088cc;
+      --cyan-dim: rgba(0,150,200,0.7);
+      --green: #00a050;
+      --text: #1a1a2e;
+      --text-dim: #4a5568;
+      --text-muted: #8892a0;
+      --accent-glow: 0 0 20px rgba(0,150,200,0.2), 0 0 60px rgba(0,150,200,0.08);
+      --green-glow: 0 0 15px rgba(0,160,80,0.2);
+    }
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'JetBrains Mono', monospace; min-height: 100vh; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(0,220,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(0,220,255,0.025) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; z-index: 0; }
+  body::after { content: ''; position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px); pointer-events: none; z-index: 1000; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(8,12,16,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 0 4rem; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-family: 'Chakra Petch', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--cyan); letter-spacing: 0.12em; text-decoration: none; }
+  .nav-logo span { color: var(--text-dim); }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.2s; font-family: 'Chakra Petch', sans-serif; }
+  nav ul a:hover, nav ul a.active { color: var(--cyan); }
+  .nav-cta { font-family: 'Chakra Petch', sans-serif; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; background: transparent; color: var(--cyan); border: 1px solid var(--border2); padding: 0.45rem 1.2rem; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+  .nav-cta:hover { background: rgba(0,220,255,0.08); box-shadow: var(--accent-glow); }
+
+  section { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 6rem 2rem; }
+  .section-label { font-size: 0.63rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.8rem; }
+  .section-label::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--cyan); }
+  .section-title { font-family: 'Chakra Petch', sans-serif; font-size: 2.4rem; font-weight: 700; color: #e8f4ff; line-height: 1.1; margin-bottom: 1rem; }
+  .section-line { width: 48px; height: 2px; background: var(--cyan); margin-bottom: 3rem; box-shadow: var(--accent-glow); }
+
+  #hero { min-height: 100vh; max-width: 100%; padding: 0 8%; display: flex; flex-direction: column; justify-content: center; }
+  .hero-status { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.68rem; letter-spacing: 0.2em; color: var(--green); text-transform: uppercase; margin-bottom: 2rem; font-family: 'Chakra Petch', sans-serif; }
+  .hero-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .hero-greeting { font-size: 0.78rem; color: var(--text-dim); letter-spacing: 0.15em; margin-bottom: 0.8rem; font-family: 'Chakra Petch', sans-serif; }
+  .hero-name { font-family: 'Chakra Petch', sans-serif; font-size: clamp(2.8rem, 7vw, 6rem); font-weight: 700; line-height: 1.05; color: #e8f4ff; margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+  .hero-name .outline { color: transparent; -webkit-text-stroke: 1px rgba(0,220,255,0.5); }
+  .hero-typewriter { font-size: 0.95rem; color: var(--cyan); margin: 1.5rem 0; min-height: 1.5rem; letter-spacing: 0.05em; }
+  .cursor { display: inline-block; width: 2px; height: 1em; background: var(--cyan); margin-left: 2px; vertical-align: middle; animation: blink 1s step-end infinite; }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+  .hero-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.9; max-width: 500px; margin-bottom: 2.5rem; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { font-family: 'Chakra Petch', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; background: var(--cyan); color: #080c10; border: none; padding: 0.85rem 2rem; cursor: pointer; text-decoration: none; font-weight: 700; transition: all 0.2s; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%); box-shadow: 0 0 30px rgba(0,220,255,0.3); display: inline-block; }
+  .btn-primary:hover { background: #33e8ff; box-shadow: 0 0 50px rgba(0,220,255,0.5); }
+  .btn-ghost { font-family: 'Chakra Petch', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; background: transparent; color: var(--text); border: 1px solid var(--border2); padding: 0.85rem 2rem; cursor: pointer; text-decoration: none; transition: all 0.2s; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%); display: inline-block; }
+  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+  .hero-stats { display: flex; gap: 3rem; margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
+  .stat-num { font-family: 'Chakra Petch', sans-serif; font-size: 2rem; font-weight: 700; color: var(--cyan); line-height: 1; }
+  .stat-label { font-size: 0.62rem; letter-spacing: 0.15em; color: var(--text-dim); text-transform: uppercase; margin-top: 0.3rem; }
+  .hero-corner { position: absolute; right: 8%; top: 50%; transform: translateY(-50%); width: 260px; height: 260px; opacity: 0.07; animation: floatRotate 20s linear infinite; }
+  @keyframes floatRotate { from { transform: translateY(-50%) rotate(0deg); } to { transform: translateY(-50%) rotate(360deg); } }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .about-text p { font-size: 0.82rem; color: var(--text-dim); line-height: 1.9; margin-bottom: 1.2rem; }
+  .about-text p strong { color: var(--cyan); font-weight: 500; }
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .skill-group h4 { font-family: 'Chakra Petch', sans-serif; font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.6rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+  .skill-group ul { list-style: none; }
+  .skill-group li { font-size: 0.72rem; color: var(--text-dim); padding: 0.22rem 0; display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
+  .skill-group li:hover { color: var(--text); }
+  .skill-group li::before { content: '▹'; color: var(--cyan); font-size: 0.65rem; }
+
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 1.5rem; }
+  .project-card { background: var(--surface); border: 1px solid var(--border); padding: 1.8rem; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
+  .project-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--cyan), transparent); transform: translateX(-100%); transition: transform 0.5s; }
+  .project-card:hover::before { transform: translateX(100%); }
+  .project-card:hover { border-color: var(--border2); transform: translateY(-4px); }
+  .project-num { font-size: 0.62rem; letter-spacing: 0.2em; color: var(--text-muted); margin-bottom: 1rem; font-family: 'Chakra Petch', sans-serif; }
+  .project-name { font-family: 'Chakra Petch', sans-serif; font-size: 1.05rem; font-weight: 600; color: #e8f4ff; margin-bottom: 0.6rem; }
+  .project-desc { font-size: 0.72rem; color: var(--text-dim); line-height: 1.8; margin-bottom: 1.4rem; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.4rem; }
+  .tag { font-size: 0.57rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cyan-dim); border: 1px solid rgba(0,220,255,0.15); padding: 0.18rem 0.55rem; background: rgba(0,220,255,0.04); font-family: 'Chakra Petch', sans-serif; }
+  .project-links { display: flex; gap: 1rem; }
+  .project-link { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s; font-family: 'Chakra Petch', sans-serif; }
+  .project-link:hover { color: var(--cyan); }
+  .project-link svg { width: 12px; height: 12px; }
+  .project-card.featured { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+  .featured-badge { position: absolute; top: 1.4rem; right: 1.4rem; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); border: 1px solid rgba(0,255,136,0.3); padding: 0.18rem 0.55rem; background: rgba(0,255,136,0.05); font-family: 'Chakra Petch', sans-serif; }
+  .featured-visual { background: var(--surface2); border: 1px solid var(--border); height: 200px; overflow: hidden; position: relative; }
+  .featured-visual .code-lines { position: absolute; inset: 0; padding: 1.2rem; font-size: 0.63rem; color: rgba(0,220,255,0.22); line-height: 1.85; overflow: hidden; user-select: none; font-family: 'JetBrains Mono', monospace; }
+  .code-hl { color: rgba(0,220,255,0.55); }
+
+  .client-projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
+  .client-project-card { background: var(--surface); border: 1px solid var(--border); padding: 1.8rem; position: relative; overflow: hidden; transition: all 0.3s ease; animation: slideInUp 0.8s ease forwards; }
+  .client-project-card:nth-child(1) { animation-delay: 0.1s; }
+  .client-project-card:nth-child(2) { animation-delay: 0.2s; }
+  @keyframes slideInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+  .client-project-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--cyan), transparent); transform: translateX(-100%); transition: transform 0.5s; }
+  .client-project-card:hover::before { transform: translateX(100%); }
+  .client-project-card:hover { border-color: var(--border2); transform: translateY(-4px); box-shadow: 0 0 30px rgba(0,220,255,0.1); }
+
+  .resume-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .resume-col h3 { font-family: 'Chakra Petch', sans-serif; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cyan); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem; }
+  .resume-col h3::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .timeline-item { position: relative; padding-left: 1.5rem; margin-bottom: 2rem; }
+  .timeline-item::before { content: ''; position: absolute; left: 0; top: 6px; width: 6px; height: 6px; border: 1px solid var(--cyan); background: var(--bg); box-shadow: 0 0 8px rgba(0,220,255,0.4); }
+  .timeline-item::after { content: ''; position: absolute; left: 2.5px; top: 18px; bottom: -2rem; width: 1px; background: var(--border); }
+  .timeline-item:last-child::after { display: none; }
+  .timeline-date { font-size: 0.6rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.25rem; font-family: 'Chakra Petch', sans-serif; }
+  .timeline-role { font-family: 'Chakra Petch', sans-serif; font-size: 0.88rem; font-weight: 600; color: #e8f4ff; margin-bottom: 0.18rem; }
+  .timeline-company { font-size: 0.7rem; color: var(--cyan-dim); margin-bottom: 0.55rem; }
+  .timeline-desc { font-size: 0.7rem; color: var(--text-dim); line-height: 1.8; }
+  .skill-bar-item { margin-bottom: 1.2rem; }
+  .skill-bar-header { display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-size: 0.68rem; font-family: 'Chakra Petch', sans-serif; }
+  .skill-bar-name { color: var(--text); }
+  .skill-bar-pct { color: var(--text-dim); }
+  .skill-bar-track { height: 2px; background: var(--surface2); }
+  .skill-bar-fill { height: 100%; background: var(--cyan); box-shadow: 0 0 8px rgba(0,220,255,0.5); transition: width 1.2s cubic-bezier(0.19, 1, 0.22, 1); }
+
+  .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .blog-card { background: var(--surface); border: 1px solid var(--border); padding: 1.8rem; transition: border-color 0.3s, transform 0.3s; text-decoration: none; display: block; color: inherit; }
+  .blog-card:hover { border-color: var(--border2); transform: translateY(-3px); }
+  .blog-meta { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase; font-family: 'Chakra Petch', sans-serif; flex-wrap: wrap; }
+  .blog-cat { color: var(--cyan-dim); border: 1px solid rgba(0,220,255,0.15); padding: 0.14rem 0.48rem; font-size: 0.56rem; }
+  .blog-title { font-family: 'Chakra Petch', sans-serif; font-size: 0.95rem; font-weight: 600; color: #e8f4ff; margin-bottom: 0.6rem; line-height: 1.4; }
+  .blog-excerpt { font-size: 0.7rem; color: var(--text-dim); line-height: 1.8; margin-bottom: 1.2rem; }
+  .blog-read { font-size: 0.62rem; color: var(--cyan); letter-spacing: 0.15em; text-transform: uppercase; font-family: 'Chakra Petch', sans-serif; }
+  .blog-read::after { content: ' →'; }
+
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start; }
+  .contact-info h3 { font-family: 'Chakra Petch', sans-serif; font-size: 1.4rem; font-weight: 600; color: #e8f4ff; margin-bottom: 1rem; line-height: 1.3; }
+  .contact-info p { font-size: 0.76rem; color: var(--text-dim); line-height: 1.9; margin-bottom: 2rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 0.8rem; }
+  .contact-link { display: flex; align-items: center; gap: 0.8rem; font-size: 0.72rem; color: var(--text-dim); text-decoration: none; transition: color 0.2s; font-family: 'Chakra Petch', sans-serif; }
+  .contact-link:hover { color: var(--cyan); }
+  .contact-link-icon { width: 32px; height: 32px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s; color: var(--cyan); }
+  .contact-link:hover .contact-link-icon { border-color: var(--border2); }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); font-family: 'Chakra Petch', sans-serif; }
+  .form-group input, .form-group textarea { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 0.75rem 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; outline: none; transition: border-color 0.2s; resize: none; }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--border2); }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-muted); }
+
+  .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; }
+  .modal.active { display: flex; }
+  .modal-content { background: var(--surface2); border: 1px solid var(--border2); padding: 2.5rem; max-width: 450px; width: 90%; box-shadow: 0 0 50px rgba(0,220,255,0.2); clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%); }
+  .modal-header { margin-bottom: 2rem; }
+  .modal-title { font-family: 'Chakra Petch', sans-serif; font-size: 1.2rem; font-weight: 600; color: #e8f4ff; margin-bottom: 0.5rem; }
+  .modal-subtitle { font-size: 0.7rem; color: var(--text-dim); }
+  .modal-form { display: flex; flex-direction: column; gap: 1rem; }
+  .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; background: transparent; border: none; color: var(--cyan); cursor: pointer; font-size: 1.5rem; padding: 0.5rem; transition: color 0.2s; }
+  .modal-close:hover { color: #33e8ff; }
+  .modal-buttons { display: flex; gap: 1rem; margin-top: 1.5rem; }
+  .modal-buttons button { flex: 1; }
+
+  footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 2rem 8%; display: flex; justify-content: space-between; align-items: center; font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.1em; font-family: 'Chakra Petch', sans-serif; }
+  footer a { color: var(--cyan); text-decoration: none; }
+
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    nav ul { display: none; }
+    section { padding: 5rem 1.5rem; }
+    #hero { padding: 0 1.5rem; }
+    .about-grid, .resume-grid, .contact-grid, .project-card.featured, .client-projects-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-corner { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">MOHAN<span>.DEV</span></a>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-status">Open to new opportunities</div>
+  <p class="hero-greeting">// Hello, World! I'm</p>
+  <h1 class="hero-name">
+    Mohan Nakka<br>
+    <span class="outline">Full-Stack Engineer</span>
+  </h1>
+  <div class="hero-typewriter"><span id="typewriter"></span><span class="cursor"></span></div>
+  <p class="hero-desc">Backend engineer specializing in Java, Spring Boot, and cloud-native microservices. I build scalable AWS-powered systems, lead monolith-to-cloud migrations, and ship APIs that hold up under real-world load.</p>
+  <div class="hero-actions">
+    <a href="#projects" class="btn-primary">View Projects</a>
+    <a href="#contact" class="btn-ghost">Get in Touch</a>
+  </div>
+  <div class="hero-stats">
+    <div><div class="stat-num">5+</div><div class="stat-label">Years Exp.</div></div>
+    <div><div class="stat-num">4</div><div class="stat-label">Companies</div></div>
+    <div><div class="stat-num">15+</div><div class="stat-label">Microservices</div></div>
+    <div><div class="stat-num">M.S.</div><div class="stat-label">Comp. Sci.</div></div>
+  </div>
+  <svg class="hero-corner" viewBox="0 0 280 280" fill="none">
+    <circle cx="140" cy="140" r="130" stroke="cyan" stroke-width="0.5" stroke-dasharray="4 6"/>
+    <circle cx="140" cy="140" r="100" stroke="cyan" stroke-width="0.5" stroke-dasharray="2 8"/>
+    <circle cx="140" cy="140" r="60" stroke="cyan" stroke-width="1"/>
+    <line x1="140" y1="10" x2="140" y2="270" stroke="cyan" stroke-width="0.5" opacity="0.5"/>
+    <line x1="10" y1="140" x2="270" y2="140" stroke="cyan" stroke-width="0.5" opacity="0.5"/>
+    <polygon points="140,80 160,130 140,120 120,130" fill="cyan" opacity="0.5"/>
+  </svg>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">Who I Am</div>
+  <h2 class="section-title">About Me</h2>
+  <div class="section-line"></div>
+  <div class="about-grid fade-in">
+    <div class="about-text">
+      <p>I'm a <strong>Backend / Full-Stack Engineer</strong> with senior-level expertise in Java, Spring Boot, and microservices architecture. I thrive on migrating legacy monoliths to cloud-native platforms and building systems with near-zero downtime.</p>
+      <p>I've shipped production software at <strong>MVP Healthcare</strong>, <strong>University at Albany</strong>, <strong>Infosys (Citi)</strong>, and <strong>Renault Nissan</strong> — spanning healthcare, fintech, automotive, and higher education domains.</p>
+      <p>Currently completing my <strong>M.S. in Computer Science</strong> at UAlbany SUNY while working full-time, exploring AI-driven analytics integration on top of enterprise-grade backend infrastructure.</p>
+    </div>
+    <div>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <h4>Languages</h4>
+          <ul>
+            <li>Java / J2EE</li>
+            <li>Python</li>
+            <li>TypeScript</li>
+            <li>C++</li>
+            <li>PL/SQL</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h4>Backend &amp; ML</h4>
+          <ul>
+            <li>Spring Boot / MVC</li>
+            <li>Flask / FastAPI</li>
+            <li>TensorFlow / Keras</li>
+            <li>Hugging Face NLP</li>
+            <li>Node.js / Express</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h4>Cloud &amp; MLOps</h4>
+          <ul>
+            <li>AWS (SageMaker, Lambda, S3)</li>
+            <li>AWS CDK / CloudWatch</li>
+            <li>Docker / Kubernetes</li>
+            <li>GitHub Actions CI/CD</li>
+            <li>GCP / Azure</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h4>AI/ML &amp; Data</h4>
+          <ul>
+            <li>Deep Learning / RNN/LSTM</li>
+            <li>Computer Vision (CNN)</li>
+            <li>NLP / spaCy / Transformers</li>
+            <li>MongoDB / PostgreSQL</li>
+            <li>Data Pipeline &amp; ETL</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">What I've Built</div>
+  <h2 class="section-title">Projects</h2>
+  <div class="section-line"></div>
+  <div class="projects-grid fade-in">
+
+    <div class="project-card featured">
+      <span class="featured-badge">Featured</span>
+      <div>
+        <div class="project-num">01 — Featured</div>
+        <div class="project-name">End-to-End MLOps Pipeline on AWS SageMaker</div>
+        <div class="project-desc">Architected and deployed a production-grade MLOps pipeline using Infrastructure-as-Code with AWS CDK in Python. Built automated data ingestion, preprocessing, and model training workflows with SageMaker Pipelines, ensuring only validated models advance to production. Established CI/CD with GitHub Actions for model versioning and achieved sub-200ms API response benchmarks via centralized CloudWatch logging.</div>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">AWS SageMaker</span><span class="tag">AWS CDK</span><span class="tag">Lambda</span><span class="tag">S3</span><span class="tag">CloudWatch</span><span class="tag">GitHub Actions</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/NakkaMohan" class="project-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>GitHub</a>
+        </div>
+      </div>
+      <div class="featured-visual">
+        <div class="code-lines">
+<span class="code-hl">pipeline</span> = sagemaker.Pipeline(<br>
+&nbsp;&nbsp;name=<span class="code-hl">"ml-ops-pipeline"</span>,<br>
+&nbsp;&nbsp;parameters=[...],<br>
+&nbsp;&nbsp;steps=[<span class="code-hl">processing_step</span>, <span class="code-hl">training_step</span>]<br>
+)<br>
+<br>
+<span class="code-hl">pipeline</span>.upsert(role_arn=<span class="code-hl">iam_role</span>)<br>
+<span class="code-hl">pipeline</span>.start()<br>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">02</div>
+      <div class="project-name">PrepSmart – AI Interview Prep Platform</div>
+      <div class="project-desc">Full-stack AI-powered interview evaluation platform with 1,000+ concurrent user support via horizontal scaling and async processing. Python/Flask backend achieved sub-500ms response times with RESTful APIs. Integrated NLP pipelines using Hugging Face Transformers and spaCy for semantic answer evaluation, keyword extraction, and sentiment scoring. MongoDB backend for session management and user performance tracking.</div>
+      <div class="project-tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">MongoDB</span><span class="tag">NLP</span><span class="tag">Hugging Face</span><span class="tag">Docker</span><span class="tag">REST APIs</span></div>
+      <div class="project-links"><a href="https://github.com/NakkaMohan" class="project-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>GitHub</a></div>
+    </div>
+
+
+    <!-- Client Projects Side-by-Side -->
+      <div class="client-project-card">
+        <div class="project-num">04</div>
+        <div class="project-name">Fair Deal Car Service</div>
+        <div class="project-desc">Built end-to-end client website with responsive design, service booking system, payment processing, and admin dashboard. Delivered custom features for automotive service business with real-time appointment scheduling and customer management portal.</div>
+        <div class="project-tags"><span class="tag">Full Stack</span><span class="tag">Responsive Design</span><span class="tag">Booking System</span><span class="tag">Payment Integration</span></div>
+        <div class="project-links"><a href="https://fairdealcarservice.com" class="project-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h6M15 3h6v6M10 13H3v7a2 2 0 0 0 2 2h7"/></svg>Live Site</a></div>
+      </div>
+
+      <div class="client-project-card">
+        <div class="project-num">05</div>
+        <div class="project-name">Sunny Express Taxi</div>
+        <div class="project-desc">Complete end-to-end taxi service platform with real-time ride tracking, driver management, pricing engine, and customer portal. Implemented payment processing, booking optimization, and dispatch system for seamless taxi operations.</div>
+        <div class="project-tags"><span class="tag">Full Stack</span><span class="tag">Real-time Tracking</span><span class="tag">Booking Engine</span><span class="tag">Payment Gateway</span></div>
+        <div class="project-links"><a href="https://sunnyexpresstaxi.com" class="project-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h6M15 3h6v6M10 13H3v7a2 2 0 0 0 2 2h7"/></svg>Live Site</a></div>
+      </div>
+
+  </div>
+</section>
+
+<!-- RESUME -->
+<section id="resume">
+  <div class="section-label">My Journey</div>
+  <h2 class="section-title">Resume</h2>
+  <div class="section-line"></div>
+  <div class="resume-grid fade-in">
+    <div class="resume-col">
+      <h3>Experience</h3>
+      <div class="timeline-item">
+        <div class="timeline-date">Aug 2024 – Present</div>
+        <div class="timeline-role">Java Full Stack Developer</div>
+        <div class="timeline-company">MVP Healthcare — Albany, NY</div>
+        <div class="timeline-desc">AWS Lambda/EC2/S3 deployments, Spring Batch ETL pipelines, RESTful &amp; SOAP APIs with Swagger docs, React.js UIs, and OpenAI API integration for AI-assisted workflows.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Nov 2023 – Jul 2024</div>
+        <div class="timeline-role">Java Full Stack Developer</div>
+        <div class="timeline-company">University at Albany, SUNY — NY</div>
+        <div class="timeline-desc">Migrated monoliths to Spring Boot microservices, built RESTful/GraphQL APIs, Selenium test automation, and AI-driven student analytics dashboards.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Oct 2020 – Sep 2023</div>
+        <div class="timeline-role">Java Full Stack Developer</div>
+        <div class="timeline-company">Infosys — Client: Citi, Hyderabad</div>
+        <div class="timeline-desc">PCI-compliant financial APIs, AWS Lambda cloud functions, Spring Boot microservices on Docker/ECS, and Jenkins-driven CI/CD pipelines.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Jul 2019 – Sep 2020</div>
+        <div class="timeline-role">Java Developer</div>
+        <div class="timeline-company">Renault Nissan TBCI — Chennai, India</div>
+        <div class="timeline-desc">Spring Boot microservices on PCF &amp; GCP, React/Redux UIs. Cut deployment time by 30% via Linux shell-script automation and ANT build tooling.</div>
+      </div>
+    </div>
+    <div class="resume-col">
+      <h3>Education</h3>
+      <div class="timeline-item">
+        <div class="timeline-date">In Progress</div>
+        <div class="timeline-role">M.S. Computer Science</div>
+        <div class="timeline-company">University at Albany, SUNY — USA</div>
+        <div class="timeline-desc">Focus on distributed systems, cloud computing, and AI/ML integration in enterprise-grade applications.</div>
+      </div>
+      <h3 style="margin-top:2.5rem">Core Skills</h3>
+      <div class="skill-bar-item">
+        <div class="skill-bar-header"><span class="skill-bar-name">Java / Spring Boot</span><span class="skill-bar-pct">95%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="95" style="width:0"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-header"><span class="skill-bar-name">Python / ML / Deep Learning</span><span class="skill-bar-pct">90%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="90" style="width:0"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-header"><span class="skill-bar-name">AWS SageMaker / MLOps</span><span class="skill-bar-pct">88%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="88" style="width:0"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-header"><span class="skill-bar-name">Microservices Architecture</span><span class="skill-bar-pct">92%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="92" style="width:0"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-header"><span class="skill-bar-name">Docker / Kubernetes</span><span class="skill-bar-pct">85%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85" style="width:0"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-header"><span class="skill-bar-name">NLP / Computer Vision</span><span class="skill-bar-pct">82%</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="82" style="width:0"></div></div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:3rem;text-align:center">
+    <button onclick="openResumeModal()" class="btn-primary">Download Full Resume ↓</button>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="section-label">My Writing</div>
+  <h2 class="section-title">Blog</h2>
+  <div class="section-line"></div>
+  <div class="blog-grid fade-in">
+    <a href="#" class="blog-card">
+      <div class="blog-meta"><span class="blog-cat">System Design</span><span>Apr 2026</span><span>7 min read</span></div>
+      <div class="blog-title">Migrating a Healthcare Monolith to Microservices Without Burning Down the House</div>
+      <div class="blog-excerpt">Lessons from a real production migration: choosing service boundaries, managing shared databases, and keeping downtime at zero throughout the cutover.</div>
+      <div class="blog-read">Read Article</div>
+    </a>
+    <a href="#" class="blog-card">
+      <div class="blog-meta"><span class="blog-cat">AWS</span><span>Mar 2026</span><span>5 min read</span></div>
+      <div class="blog-title">Spring Boot + AWS Lambda: When Serverless Actually Makes Sense</div>
+      <div class="blog-excerpt">A practical breakdown of when to reach for Lambda vs. ECS—real-world patterns from healthcare and fintech deployments, not just benchmarks.</div>
+      <div class="blog-read">Read Article</div>
+    </a>
+    <a href="#" class="blog-card">
+      <div class="blog-meta"><span class="blog-cat">Java</span><span>Feb 2026</span><span>6 min read</span></div>
+      <div class="blog-title">Kafka vs. RabbitMQ: How I Chose for a High-Throughput ETL Pipeline</div>
+      <div class="blog-excerpt">Not another benchmark post — a decision framework based on real trade-offs I faced building medical data ETL pipelines with strict ordering guarantees.</div>
+      <div class="blog-read">Read Article</div>
+    </a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Say Hello</div>
+  <h2 class="section-title">Contact</h2>
+  <div class="section-line"></div>
+  <div class="contact-grid fade-in">
+    <div class="contact-info">
+      <h3>Let's build something great together.</h3>
+      <p>Whether you have a backend project, a cloud migration challenge, or want to talk microservices architecture — my inbox is open. I typically respond within 24 hours.</p>
+      <div class="contact-links">
+        <a href="mailto:nakkamohan2012@gmail.com" class="contact-link">
+          <div class="contact-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          nakkamohan2012@gmail.com
+        </a>
+        <a href="tel:+18027501977" class="contact-link">
+          <div class="contact-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 15a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 4h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          +1 (802) 750-1977
+        </a>
+        <a href="https://linkedin.com/in/MohanNakka" class="contact-link">
+          <div class="contact-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+          linkedin.com/in/MohanNakka
+        </a>
+        <a href="https://github.com/NakkaMohan" class="contact-link">
+          <div class="contact-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div>
+          github.com/NakkaMohan
+        </a>
+      </div>
+    </div>
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group"><label>Name</label><input type="text" placeholder="Jane Smith" /></div>
+        <div class="form-group"><label>Email</label><input type="email" placeholder="jane@example.com" /></div>
+      </div>
+      <div class="form-group"><label>Subject</label><input type="text" placeholder="Project proposal / Collaboration" /></div>
+      <div class="form-group"><label>Message</label><textarea rows="6" placeholder="Tell me about your project..."></textarea></div>
+      <button type="submit" class="btn-primary" style="align-self:flex-start;border:none;font-size:0.72rem;font-family:'Chakra Petch',sans-serif;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;">
+        Send Message →
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- RESUME DOWNLOAD MODAL -->
+<div id="resumeModal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeResumeModal()">✕</button>
+    <div class="modal-header">
+      <div class="modal-title">Download My Resume</div>
+      <div class="modal-subtitle">Please provide your details to download</div>
+    </div>
+    <form class="modal-form" onsubmit="handleResumeDownload(event)">
+      <div class="form-group">
+        <label>Name *</label>
+        <input type="text" id="resumeName" placeholder="Your Name" required />
+      </div>
+      <div class="form-group">
+        <label>Email *</label>
+        <input type="email" id="resumeEmail" placeholder="your.email@example.com" required />
+      </div>
+      <div class="modal-buttons">
+        <button type="button" onclick="closeResumeModal()" class="btn-ghost" style="margin-top:0">Cancel</button>
+        <button type="submit" class="btn-primary" style="margin-top:0;border:none">Download Resume</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <span>© 2026 Mohan Nakka — Software Engineer</span>
+  <span>Albany, NY · Open to Remote</span>
+  <a href="#hero">↑ Back to Top</a>
+</footer>
+
+<script>
+  const phrases = [
+    'Building microservices that scale.',
+    'Java & Spring Boot specialist.',
+    'Migrating monoliths to the cloud.',
+    'AWS-powered backend systems.',
+    'Turning complex domains into clean APIs.'
+  ];
+  let pi = 0, ci = 0, deleting = false;
+  const el = document.getElementById('typewriter');
+  function type() {
+    const phrase = phrases[pi];
+    if (!deleting) {
+      el.textContent = phrase.slice(0, ++ci);
+      if (ci === phrase.length) { deleting = true; setTimeout(type, 1800); return; }
+    } else {
+      el.textContent = phrase.slice(0, --ci);
+      if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+    }
+    setTimeout(type, deleting ? 45 : 75);
+  }
+  type();
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  const barObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting)
+        e.target.querySelectorAll('.skill-bar-fill').forEach(b => { b.style.width = b.dataset.width + '%'; });
+    });
+  }, { threshold: 0.3 });
+  const resumeSec = document.getElementById('resume');
+  if (resumeSec) barObs.observe(resumeSec);
+
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav ul a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = 'var(--green)';
+    btn.style.boxShadow = 'var(--green-glow)';
+    setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; btn.style.boxShadow = ''; }, 3000);
+  }
+
+  // Resume Download Modal Functions
+  function openResumeModal() {
+    document.getElementById('resumeModal').classList.add('active');
+  }
+
+  function closeResumeModal() {
+    document.getElementById('resumeModal').classList.remove('active');
+    document.getElementById('resumeName').value = '';
+    document.getElementById('resumeEmail').value = '';
+  }
+
+  function handleResumeDownload(e) {
+    e.preventDefault();
+    const name = document.getElementById('resumeName').value;
+    const email = document.getElementById('resumeEmail').value;
+    
+    // Create a simple resume file (PDF or can be a pre-existing file)
+    // For this example, we'll create a text file that can be replaced with actual PDF
+    const resumeFileName = `Resume_${name.replace(/\s+/g, '_')}.pdf`;
+    
+    // Option 1: If you have an actual resume file, uncomment and use this:
+    // window.location.href = 'path/to/your/resume.pdf';
+    
+    // Option 2: Create a downloadable link dynamically (for testing)
+    const link = document.createElement('a');
+    link.href = './Resume.pdf'; // Path to your actual resume file
+    link.download = resumeFileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    // Close modal and show success message
+    closeResumeModal();
+    alert(`Resume downloading! Thanks for your interest, ${name}. We'll be in touch at ${email}.`);
+  }
+
+  // Close modal when clicking outside
+  document.getElementById('resumeModal').addEventListener('click', (e) => {
+    if (e.target.id === 'resumeModal') closeResumeModal();
+  });
+</script>
+</body>
+</html>
